@@ -7,6 +7,173 @@ app = Flask(__name__)
 def inicio():
     return render_template("index.html")
 
+# ELIMINAR VEHICULO
+@app.route("/eliminar_vehiculo/<int:id>")
+def eliminar_vehiculo(id):
+
+    con = conectar()
+    cur = con.cursor()
+
+    cur.execute(
+        "DELETE FROM vehiculo WHERE id_vehiculo=%s",
+        (id,)
+    )
+
+    con.commit()
+
+    cur.close()
+    con.close()
+
+    return redirect("/vehiculos")
+
+
+# EDITAR VEHICULO
+@app.route("/editar_vehiculo/<int:id>", methods=["GET", "POST"])
+def editar_vehiculo(id):
+
+    con = conectar()
+    cur = con.cursor()
+
+    if request.method == "POST":
+
+        placa = request.form["placa"]
+        modelo = request.form["modelo"]
+        anio = request.form["anio"]
+        cliente = request.form["cliente"]
+
+        cur.execute("""
+            UPDATE vehiculo
+            SET placa=%s,
+                modelo=%s,
+                anio=%s,
+                id_cliente=%s
+            WHERE id_vehiculo=%s
+        """, (placa, modelo, anio, cliente, id))
+
+        con.commit()
+
+        cur.close()
+        con.close()
+
+        return redirect("/vehiculos")
+
+    cur.execute(
+        "SELECT * FROM vehiculo WHERE id_vehiculo=%s",
+        (id,)
+    )
+
+    vehiculo = cur.fetchone()
+
+    cur.close()
+    con.close()
+
+    return render_template(
+        "editar_vehiculo.html",
+        vehiculo=vehiculo
+    )
+
+
+# VEHICULOS
+@app.route("/vehiculos", methods=["GET", "POST"])
+def vehiculos():
+
+    con = conectar()
+    cur = con.cursor()
+
+    if request.method == "POST":
+
+        placa = request.form["placa"]
+        modelo = request.form["modelo"]
+        anio = request.form["anio"]
+        cliente = request.form["cliente"]
+
+        cur.execute("""
+            INSERT INTO vehiculo
+            (placa, modelo, anio, id_cliente)
+            VALUES (%s,%s,%s,%s)
+        """, (placa, modelo, anio, cliente))
+
+        con.commit()
+
+    cur.execute("SELECT * FROM vehiculo")
+    vehiculos = cur.fetchall()
+
+    cur.execute("SELECT * FROM cliente")
+    clientes = cur.fetchall()
+
+    cur.close()
+    con.close()
+
+    return render_template(
+        "vehiculos.html",
+        vehiculos=vehiculos,
+        clientes=clientes
+    )
+    
+# ELIMINAR CLIENTE
+@app.route("/eliminar_cliente/<int:id>")
+def eliminar_cliente(id):
+
+    con = conectar()
+    cur = con.cursor()
+
+    cur.execute(
+        "DELETE FROM cliente WHERE id_cliente=%s",
+        (id,)
+    )
+
+    con.commit()
+
+    cur.close()
+    con.close()
+
+    return redirect("/clientes")
+
+
+# EDITAR CLIENTE
+@app.route("/editar_cliente/<int:id>", methods=["GET","POST"])
+def editar_cliente(id):
+
+    con = conectar()
+    cur = con.cursor()
+
+    if request.method == "POST":
+
+        nombres = request.form["nombres"]
+        documento = request.form["documento"]
+        telefono = request.form["telefono"]
+
+        cur.execute("""
+            UPDATE cliente
+            SET nombres=%s,
+                documento=%s,
+                telefono=%s
+            WHERE id_cliente=%s
+        """,
+        (nombres, documento, telefono, id))
+
+        con.commit()
+
+        cur.close()
+        con.close()
+
+        return redirect("/clientes")
+
+    cur.execute(
+        "SELECT * FROM cliente WHERE id_cliente=%s",
+        (id,)
+    )
+
+    cliente = cur.fetchone()
+
+    cur.close()
+    con.close()
+
+    return render_template(
+        "editar_cliente.html",
+        cliente=cliente
+    )
+
 # CLIENTES
 @app.route("/clientes", methods=["GET", "POST"])
 def clientes():
@@ -33,36 +200,6 @@ def clientes():
     con.close()
 
     return render_template("clientes.html", clientes=datos)
-
-# VEHICULOS
-@app.route("/vehiculos", methods=["GET", "POST"])
-def vehiculos():
-
-    con = conectar()
-    cur = con.cursor()
-
-    if request.method == "POST":
-
-        placa = request.form["placa"]
-        modelo = request.form["modelo"]
-        anio = request.form["anio"]
-        cliente = request.form["cliente"]
-
-        cur.execute("""
-            INSERT INTO vehiculo
-            (placa, modelo, año, id_cliente)
-            VALUES (%s,%s,%s,%s)
-        """, (placa, modelo, anio, cliente))
-
-        con.commit()
-
-    cur.execute("SELECT * FROM vehiculo")
-    datos = cur.fetchall()
-
-    cur.close()
-    con.close()
-
-    return render_template("vehiculos.html", vehiculos=datos)
 
 # MECANICOS
 @app.route("/mecanicos", methods=["GET", "POST"])

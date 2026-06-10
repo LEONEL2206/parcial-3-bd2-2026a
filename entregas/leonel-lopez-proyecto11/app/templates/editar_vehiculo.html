@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h2>Editar Vehículo</h2>
+
+<form method="POST">
+
+    <label>Placa</label>
+
+    <input
+        type="text"
+        name="placa"
+        value="{{ vehiculo[1] }}"
+        class="form-control mb-2">
+
+    <label>Modelo</label>
+
+    <input
+        type="text"
+        name="modelo"
+        value="{{ vehiculo[2] }}"
+        class="form-control mb-2">
+
+    <label>Año</label>
+
+    <input
+        type="number"
+        name="anio"
+        value="{{ vehiculo[3] }}"
+        class="form-control mb-2">
+
+    <label>ID Cliente</label>
+
+    <input
+        type="number"
+        name="cliente"
+        value="{{ vehiculo[4] }}"
+        class="form-control mb-2">
+
+    <button class="btn btn-success">
+        Actualizar
+    </button>
+
+    <a href="/vehiculos"
+       class="btn btn-secondary">
+       Volver
+    </a>
+
+</form>
+
+{% endblock %}
