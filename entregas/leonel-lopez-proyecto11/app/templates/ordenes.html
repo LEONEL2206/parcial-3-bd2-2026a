@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h2>Órdenes de Trabajo</h2>
+
+<form method="POST">
+
+    <input
+        type="number"
+        name="vehiculo"
+        class="form-control mb-2"
+        placeholder="ID Vehículo">
+
+    <textarea
+        name="problema"
+        class="form-control mb-2"
+        placeholder="Problema reportado">
+    </textarea>
+
+    <input
+        type="date"
+        name="fecha"
+        class="form-control mb-2">
+
+    <button class="btn btn-danger">
+        Crear Orden
+    </button>
+
+</form>
+
+<hr>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>ID</th>
+    <th>Vehículo</th>
+    <th>Problema</th>
+    <th>Estado</th>
+</tr>
+
+{% for o in ordenes %}
+<tr>
+    <td>{{ o[0] }}</td>
+    <td>{{ o[1] }}</td>
+    <td>{{ o[2] }}</td>
+    <td>{{ o[5] }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

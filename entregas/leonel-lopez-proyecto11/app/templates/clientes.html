@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h2>Clientes</h2>
+
+<form method="POST">
+
+    <input
+        type="text"
+        name="nombres"
+        class="form-control mb-2"
+        placeholder="Nombre"
+        required>
+
+    <input
+        type="text"
+        name="documento"
+        class="form-control mb-2"
+        placeholder="Documento">
+
+    <input
+        type="text"
+        name="telefono"
+        class="form-control mb-2"
+        placeholder="Teléfono">
+
+    <button class="btn btn-primary">
+        Guardar
+    </button>
+
+</form>
+
+<hr>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Documento</th>
+    <th>Teléfono</th>
+</tr>
+
+{% for c in clientes %}
+<tr>
+    <td>{{ c[0] }}</td>
+    <td>{{ c[1] }}</td>
+    <td>{{ c[2] }}</td>
+    <td>{{ c[3] }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

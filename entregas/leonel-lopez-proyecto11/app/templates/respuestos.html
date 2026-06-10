@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h2>Repuestos</h2>
+
+<form method="POST">
+
+    <input
+        type="text"
+        name="nombre"
+        class="form-control mb-2"
+        placeholder="Nombre">
+
+    <input
+        type="number"
+        name="stock"
+        class="form-control mb-2"
+        placeholder="Stock">
+
+    <input
+        type="number"
+        step="0.01"
+        name="precio"
+        class="form-control mb-2"
+        placeholder="Precio">
+
+    <button class="btn btn-info">
+        Guardar
+    </button>
+
+</form>
+
+<hr>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Stock</th>
+    <th>Precio</th>
+</tr>
+
+{% for r in repuestos %}
+<tr>
+    <td>{{ r[0] }}</td>
+    <td>{{ r[1] }}</td>
+    <td>{{ r[2] }}</td>
+    <td>{{ r[3] }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

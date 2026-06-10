@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h2>Vehículos</h2>
+
+<form method="POST">
+
+    <input
+        type="text"
+        name="placa"
+        class="form-control mb-2"
+        placeholder="Placa">
+
+    <input
+        type="text"
+        name="modelo"
+        class="form-control mb-2"
+        placeholder="Modelo">
+
+    <input
+        type="number"
+        name="anio"
+        class="form-control mb-2"
+        placeholder="Año">
+
+    <input
+        type="number"
+        name="cliente"
+        class="form-control mb-2"
+        placeholder="ID Cliente">
+
+    <button class="btn btn-success">
+        Guardar
+    </button>
+
+</form>
+
+<hr>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>ID</th>
+    <th>Placa</th>
+    <th>Modelo</th>
+    <th>Año</th>
+</tr>
+
+{% for v in vehiculos %}
+<tr>
+    <td>{{ v[0] }}</td>
+    <td>{{ v[1] }}</td>
+    <td>{{ v[2] }}</td>
+    <td>{{ v[3] }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<h1>Proyecto Taller Mecánico</h1>
+
+<div class="row mt-4">
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h4>Clientes</h4>
+                <a href="/clientes" class="btn btn-primary">
+                    Gestionar
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h4>Vehículos</h4>
+                <a href="/vehiculos" class="btn btn-success">
+                    Gestionar
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h4>Órdenes</h4>
+                <a href="/ordenes" class="btn btn-danger">
+                    Gestionar
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
